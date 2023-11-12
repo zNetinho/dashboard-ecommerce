@@ -11,27 +11,50 @@ import {
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
 import { UserContext } from "@components/providers/UserContext";
-import { loginAccount } from "@components/services/account/functions-auth";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 
-async function handleClickLogin(email: string, password: string) {
-    try {
-        const user = await loginAccount({email, password});
-        console.log(user);
-    } catch (error) {
-        console.log(error);
-    }
-}
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../services/firebase/config";
+import { Router } from "lucide-react";
+
+// async function handleClickLogin(email: string, password: string) {
+//     try {
+//         const user = await loginAccount({email, password});
+//         console.log(user);
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 export default function FormLoginAccount() {
     const router = useRouter();
-    const { signIn, isAuthenticated } = useContext(UserContext);
+    const { signInAccount, isAuthenticated, setUser } = useContext(UserContext);
     const { register, handleSubmit } = useForm();
 
+    function handleGoogleSignIn() {
+        const provider = new GoogleAuthProvider();
+    
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                const userGoogle = {
+                    email: result.user.email,
+                    nome: result.user.displayName,
+                    avatar: result.user.photoURL
+                };
+                setUser(userGoogle);
+                // criar central do usuario no futuro
+                router.replace("/");
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    
+    }
+
     async function handleSignIn(data: any) {
-        await signIn(data);
+        await signInAccount(data);
         if ( data ) {
             router.replace("/");
         }
@@ -59,6 +82,9 @@ export default function FormLoginAccount() {
                     <Button type="submit" onClick={handleSubmit(handleSignIn)}>Logar</Button>
                 </CardFooter>
             </Card>
+            <div>
+                <Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
+            </div>
         </div>
     );
 }

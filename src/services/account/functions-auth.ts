@@ -1,4 +1,6 @@
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { setCookie } from "nookies";
+import { auth } from "../firebase/config";
 
 const URL_API = "http://localhost:3001/api/user/login";
 

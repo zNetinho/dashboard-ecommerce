@@ -3,7 +3,7 @@
 import { parseCookies, setCookie } from "nookies";
 
 import { fetchInfoUser, loginAccount } from "@components/services/account/functions-auth";
-import { createContext, useContext, useEffect, useState } from "react";
+import { SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 type User = {
     nome: string,
@@ -18,7 +18,8 @@ type SignInData = {
 
 type AuthContextType = {
     user: User | null,
-    signIn: (data: SignInData) => Promise<void>,
+    signInAccount: (data: SignInData) => Promise<void>,
+    setUser: SetStateAction<any>,
     isAuthenticated: boolean
 };
 
@@ -32,14 +33,10 @@ export const UserProvider = ({ children }: any) => {
     useEffect(() => {
         const { "token_jwt": token } = parseCookies();
         console.log(token);
-        const user = async () => {
-            const user = await fetchInfoUser(token);
-            setUser(user);
-        };
         console.log(user);
     },[user]);
 
-    async function signIn({email, password}: SignInData) {
+    async function signInAccount({email, password}: SignInData) {
         console.log(email, password);
         const { token, userLogged } = await loginAccount({
             email,
@@ -51,7 +48,7 @@ export const UserProvider = ({ children }: any) => {
         setUser(userLogged);
     }
     return (
-        <UserContext.Provider value={{ user, signIn, isAuthenticated }}>
+        <UserContext.Provider value={{ user, signInAccount, isAuthenticated, setUser }}>
             {children}
         </UserContext.Provider>
     );
