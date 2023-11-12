@@ -11,3 +11,10 @@ export default function DashboardLayout({
         </div>
     );
 }
+
+// export const getServerSideProps = async (ctx) => {
+//   console.log(ctx.req.cookies)
+//    return {
+//     props: {}
+// }
+// } 

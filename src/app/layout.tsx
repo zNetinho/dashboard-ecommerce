@@ -4,6 +4,7 @@ import React from "react";
 import "./globals.css";
 import { ThemeProvider } from "@components/components/theme-provider";
 import { AuthProvider } from "@components/providers/Auth";
+import { UserProvider } from "@components/providers/UserContext";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -19,16 +20,18 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body>
                 <AuthProvider>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="system"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        <PageDefault>
-                            {children}
-                        </PageDefault>
-                    </ThemeProvider>
+                    <UserProvider>
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="system"
+                            enableSystem
+                            disableTransitionOnChange
+                        >
+                            <PageDefault>
+                                {children}
+                            </PageDefault>
+                        </ThemeProvider>
+                    </UserProvider>
                 </AuthProvider>
             </body>
         </html>

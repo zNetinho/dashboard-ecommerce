@@ -1,7 +1,7 @@
 export default function Home() {
     return (
-        <main>
-      Este conteudo principal da pagina
+        <main className="flex flex-col justify-center items-center">
+         
         </main>
     );
 }
