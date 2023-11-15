@@ -54,8 +54,3 @@ export const UserProvider = ({ children }: any) => {
     );
 }; 
 // receber token da função login, e definir usuario buscando no backend as informações
-
-export const useUser = () => {
-    return useContext(UserContext);
-};
-

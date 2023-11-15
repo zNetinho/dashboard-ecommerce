@@ -8,10 +8,10 @@ export default function PageDefault({ children }: any) {
             <nav className="h-[100px] border-b border-b-[#5CCFF1]">
                 <Header />
             </nav>
-            <section className="h-auto flex mx-5">
+            <section className="h-auto flex">
                 {children}
             </section>
-            <section className="w-full absolute bottom-[0] h-[200px]">
+            <section className="w-full absolute h-[200px]">
                 <Footer />
             </section>
         </>
