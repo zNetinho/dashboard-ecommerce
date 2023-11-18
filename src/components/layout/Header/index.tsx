@@ -1,6 +1,9 @@
+"use client";
 import Logo from "@components/components/Logo";
 import Menu from "@components/components/Menu";
 import UserArea from "@components/components/User";
+import { menu } from "@components/services/menu";
+
 
 export default function Header() {
     return (

@@ -10,55 +10,14 @@ import {
 } from "@components/components/ui/card";
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
-import { UserContext } from "@components/providers/UserContext";
-import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../../services/firebase/config";
-import { Router } from "lucide-react";
+import { signIn } from "next-auth/react";
 
-// async function handleClickLogin(email: string, password: string) {
-//     try {
-//         const user = await loginAccount({email, password});
-//         console.log(user);
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 export default function FormLoginAccount() {
-    const router = useRouter();
-    const { signInAccount, isAuthenticated, setUser } = useContext(UserContext);
-    const { register, handleSubmit } = useForm();
-
-    function handleGoogleSignIn() {
-        const provider = new GoogleAuthProvider();
-    
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                const userGoogle = {
-                    email: result.user.email,
-                    nome: result.user.displayName,
-                    avatar: result.user.photoURL
-                };
-                setUser(userGoogle);
-                // criar central do usuario no futuro
-                router.replace("/");
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    
-    }
-
-    async function handleSignIn(data: any) {
-        await signInAccount(data);
-        if ( data ) {
-            router.replace("/");
-        }
-    }
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     
     return (
         <div>
@@ -67,23 +26,30 @@ export default function FormLoginAccount() {
                     <CardTitle>Faça o login na sua conta</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                    <form onSubmit={handleSubmit(handleSignIn)}>
+                    <form>
                         <div className="space-y-1">
-                            <Label>Usuario</Label>
-                            <Input { ...register("email") } id="email" defaultValue="admin@teste.com"/>
+                            <Label>Email</Label>
+                            <Input onChange={(e) => setEmail(e.target.value)} id="email"/>
                         </div>
                         <div className="space-y-1">
                             <Label>Senha</Label>
-                            <Input { ...register("password") } id="password" type="password" />
+                            <Input onChange={(e) => setPassword(e.target.value)}  id="password" type="password" />
                         </div>
                     </form>
                 </CardContent>
-                <CardFooter>
-                    <Button type="submit" onClick={handleSubmit(handleSignIn)}>Logar</Button>
+                <CardFooter className="flex justify-center">
+                    {/* onClick={handleSubmit(handleSignIn)} */}
+                    <Button
+                        className="w-[100px] bg-slate-200 bg-gradient-to-r from-violet-400 to-violet-700 text-white" 
+                        onClick={() => signIn("credentials", {
+                            redirect: true,
+                            email,
+                            password
+                        })}>Logar</Button>
                 </CardFooter>
             </Card>
-            <div>
-                <Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
+            <div className="flex flex-col my-7">
+                <Button onClick={() => signIn("google")} className="w-full bg-slate-200 hover:bg-gradient-to-r hover:text-white from-green-300 to-green-600 transition-colors duration-500 ease-in-out">Entre com sua conta Google</Button>
             </div>
         </div>
     );
