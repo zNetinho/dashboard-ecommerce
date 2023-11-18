@@ -1,10 +1,9 @@
 import PageDefault from "@components/components/Default";
+import { ThemeProvider } from "@components/components/theme-provider";
+import { AuthProvider } from "@components/providers/Auth";
 import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
-import { ThemeProvider } from "@components/components/theme-provider";
-import { AuthProvider } from "@components/providers/Auth";
-import { UserProvider } from "@components/providers/UserContext";
 
 export const metadata: Metadata = {
     title: {
@@ -23,18 +22,16 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body>
                 <AuthProvider>
-                    <UserProvider>
-                        <ThemeProvider
-                            attribute="class"
-                            defaultTheme="system"
-                            enableSystem
-                            disableTransitionOnChange
-                        >
-                            <PageDefault>
-                                {children}
-                            </PageDefault>
-                        </ThemeProvider>
-                    </UserProvider>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <PageDefault>
+                            {children}
+                        </PageDefault>
+                    </ThemeProvider>
                 </AuthProvider>
             </body>
         </html>

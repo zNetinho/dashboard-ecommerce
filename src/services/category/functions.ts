@@ -6,3 +6,10 @@ export async function fetchCategorie(slug: string) {
     const categoria = await res.json();
     return categoria;
 }
+
+export async function fetchCategories() {
+    const res = await fetch(`${URL_API}`);
+    const categorias = await res.json();
+    console.log(categorias);
+    return categorias;
+}

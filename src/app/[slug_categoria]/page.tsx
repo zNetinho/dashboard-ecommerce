@@ -25,10 +25,11 @@ export async function generateMetadata(
 
 export default async function Categoria({ params }: any) {
     const { slug_categoria } = params;
+    console.log(slug_categoria);
     const { categoria } = await fetchCategorie(slug_categoria);
     console.log(categoria);
     const productsList = await listProducts();
-    const products = [];
+    const products: any = [];
     for (let index = 0; index < productsList.length; index++) {
         const product = productsList[index];
         if(Number(product.sku) === Number(categoria.produtos)) {

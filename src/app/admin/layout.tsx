@@ -1,12 +1,12 @@
 "use client";
 
-import { UserContext } from "@components/providers/UserContext";
-import React, { useContext } from "react";
+import { useSession } from "next-auth/react";
+import React from "react";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
-    const { isAuthenticated } = useContext(UserContext);
+    const { data: session } = useSession();
 
-    if( isAuthenticated ) {
+    if( session ) {
         return (
             <div>
                 {children}
@@ -14,7 +14,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         );
     } else {
         return (
-            <div><h1>Por favor faça login</h1></div>
+            <div>
+                <h1> Rota de acesso bloqueada </h1>
+                <span> para acessar essa rota faça login</span>
+            </div>
         );
     }
 }

@@ -6,20 +6,21 @@ export interface ProductsProps {
         sku: number,
         img: Array<string>,
         nome: string,
+        slug: string,
         descricao: string,
         categoria: string,
-        price: number
+        preco: number
     }
 }
 
-// vai ser usado na Grid, para incluir os produtos.
 export default function Modal({product}: ProductsProps) {
     return (
         <ItemModal 
             key={product.sku}
             img={product.img[0]}
             name={product.nome}
-            price={Number(product.price)}
+            slug={product.slug}
+            preco={product.preco}
         />
     );
 }
