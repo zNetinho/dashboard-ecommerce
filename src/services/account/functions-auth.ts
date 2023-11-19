@@ -1,9 +1,15 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { setCookie } from "nookies";
 import { auth } from "../firebase/config";
+import { use } from "react";
 
 const URL_API = "http://localhost:3001/api/user/login";
 
+
+type SignInData = {
+    email: string;
+    password: string;
+}
 
 export async function fetchUsers() {
     const URL_API = "http://localhost:3001/api/user";
@@ -31,11 +37,6 @@ export async function fetchUsers() {
         console.error("Erro de rede:", error);
     }
 }
-
-type SignInData = {
-    email: string;
-    password: string;
-  }
 
 export async function loginAccount({email, password}: SignInData) {
     const URL_API = "http://localhost:3001/api/user/login";
@@ -116,6 +117,40 @@ export async function createAccount(nome: any, email: any, password: any, confir
 
         if (resposta.ok) {
             // Lida com a lista de usuários retornada pela API
+            return dados;
+            // console.log("Lista de usuários:", dados.users);
+        } else {
+            // Lidar com erros ao obter a lista de usuários
+            console.error("Erro ao obter a lista de usuários:", dados.message);
+        }
+    } catch (error) {
+        console.error("Erro de rede:", error);
+    }
+}
+
+export async function createAccountGoogle(email: any, password: any) {
+
+    const user = await signInWithPopup(auth, new GoogleAuthProvider());
+    console.log(user.user.email);
+    const emailLogin = user.user.email;
+    const passwordLogin = user.user.uid;
+    const URL_API = "http://localhost:3001/api/user/loginGoogle";
+
+    try {
+        const resposta = await fetch(URL_API, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                // Adicione cabeçalhos de autenticação, se necessário
+            },
+            body: JSON.stringify({
+                email: emailLogin,
+                password: passwordLogin,
+            })
+        });
+        const dados = await resposta.json();
+        console.log(dados);
+        if (resposta.ok) {
             return dados;
             // console.log("Lista de usuários:", dados.users);
         } else {

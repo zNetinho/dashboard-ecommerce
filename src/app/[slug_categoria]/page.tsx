@@ -30,11 +30,15 @@ export default async function Categoria({ params }: any) {
     console.log(categoria);
     const productsList = await listProducts();
     const products: any = [];
-    for (let index = 0; index < productsList.length; index++) {
-        const product = productsList[index];
-        if(Number(product.sku) === Number(categoria.produtos)) {
-            products.push(product);
+    if( productsList ) {
+        for (let index = 0; index < productsList.length; index++) {
+            const product = productsList[index];
+            if(Number(product.sku) === Number(categoria.produtos)) {
+                products.push(product);
+            }
         }
+    }else {
+        return null;
     }
     console.log(products);
     
