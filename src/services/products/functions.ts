@@ -1,3 +1,6 @@
+import { ProductWithTotalPrice } from "@components/types/Product/PorductWithTotalPrice";
+import { Product } from "@components/types/Product/Product";
+
 const URL_API = "http://localhost:3001/api/products";
 
 export async function listProducts() {
@@ -13,3 +16,19 @@ export async function fetchProduct(params: any) {
     const produto = await res.json();
     return produto;
 }
+
+// const computeProductTotalPrice = (product: Product): ProductWithTotalPrice => {
+//     if( product.die === 0) {
+//         return {
+//             ...product,
+//             totalPrice: Number(product.basePrice)
+//         };
+//     }
+  
+//     const totalDiscount = Number(product.basePrice) * (product.discountPercent / 100);
+  
+//     return {
+//         ...product,
+//         totalPrice: Number(product.basePrice) - totalDiscount,
+//     };
+// };

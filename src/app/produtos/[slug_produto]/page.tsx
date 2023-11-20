@@ -1,7 +1,9 @@
-import Modal from "@components/components/pages/Categorie/Grid/Modal";
+import Breadcrumb from "@components/components/Breadcrumb";
+import BreadcrumbElement from "@components/components/Breadcrumb/Breadcrumb";
+import BreadcrumbItem from "@components/components/Breadcrumb/BreadcrumbItem";
+import ProductInfo from "@components/components/pages/Product/Modal/ProductInfo";
 import { fetchProduct } from "@components/services/products/functions";
 import { Metadata, ResolvingMetadata } from "next";
-import React from "react";
 
 type Props = {
     params: { slug_produto: string }
@@ -13,7 +15,6 @@ export async function generateMetadata(
 ): Promise<Metadata> {
     const slug = params.slug_produto;
     const produto = await fetchProduct(slug);
-    console.log(produto);
     return {
         title: produto.title_seo,
         description: produto.description_seo,
@@ -23,13 +24,13 @@ export async function generateMetadata(
 export default async function Produto({params}: any ) {
     const slug = params.slug_produto;
     const produto = await fetchProduct(slug);
-    console.log(produto);
     return (
-        <div>
-            {/* <Modal 
-                // product={produto}
-                key={produto.sku}
-            /> */}
+        <div className="flex flex-col">
+            <div className="w-full flex flex-col items-center justify-center m-auto py-5">
+                <ProductInfo
+                    product={produto}
+                />
+            </div>
         </div>
     );
 }
