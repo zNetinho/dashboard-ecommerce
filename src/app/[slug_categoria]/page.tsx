@@ -18,6 +18,23 @@ export async function generateMetadata(
     return {
         title: categoria.title_seo,
         description: categoria.descricao_seo,
+        category: categoria.nome,
+        robots: {
+            index: true,
+            follow: true,
+            nocache: true,
+            googleBot: {
+                index: true,
+                follow: true,
+                noimageindex: false,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
+        },
+        alternates: {
+            canonical: `http://localhost:3000/${slug}`,
+        },
     };
 }
 
@@ -33,7 +50,7 @@ export default async function Categoria({ params }: any) {
     if( productsList ) {
         for (let index = 0; index < productsList.length; index++) {
             const product = productsList[index];
-            if(Number(product.sku) === Number(categoria.produtos)) {
+            if(product.categoria === categoria.nome) {
                 products.push(product);
             }
         }
@@ -44,7 +61,7 @@ export default async function Categoria({ params }: any) {
     
     return (
         <div>
-            <h1 className="text-4xl font-bold">{ categoria?.nome }</h1>
+            <h1 className="text-4xl font-bold mx-5">{ categoria?.nome }</h1>
             <GridProducts 
                 products={products}
             />
