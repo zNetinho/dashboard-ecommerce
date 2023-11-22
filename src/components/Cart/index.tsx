@@ -7,7 +7,7 @@ import CartItem from "./CartItem";
 
 
 const Cart = () => {
-    const { products, total  } = useContext(CartContext);
+    const { products, total } = useContext(CartContext);
 
     // const handleFinishPurchase = async () => {
     //     const checkout = await createCheckOut(products);
@@ -68,7 +68,7 @@ const Cart = () => {
 
                 <div className="flex items-center justify-between text-xs">
                     <p>Total</p>
-                    <p>R$ {total}</p>
+                    <p>R$ {Number(total)}</p>
                 </div>
 
                 <Button className="uppercase mt-7 font-bold">

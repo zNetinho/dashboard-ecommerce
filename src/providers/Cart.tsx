@@ -34,13 +34,14 @@ const CartProvider = ({children}: {children: ReactNode}) => {
 
     const subTotal = useMemo(() => {
         return products.reduce((acc, product) => {
-            return acc + Number(product.preco) * product.quantidade;
+            return acc + Number(product.preco) * product.quantityItem;
         }, 0);
     }, [products]);
 
     const total = useMemo(() => {
         return products.reduce((acc, product) => {
-            return acc + product.totalPrice * product.quantidade;
+            console.log(product.preco *2);
+            return acc + product.preco * product.quantityItem;
         }, 0);
     }, [products]);
 
@@ -53,7 +54,7 @@ const CartProvider = ({children}: {children: ReactNode}) => {
                     if (cartProduct.sku === product.sku) {
                         return {
                             ...cartProduct,
-                            quantidade: cartProduct.quantidade += product.quantidade
+                            quantityItem: cartProduct.quantityItem += product.quantityItem
                         };
                     }
                     return cartProduct;
@@ -72,11 +73,11 @@ const CartProvider = ({children}: {children: ReactNode}) => {
                 if (cartProduct.sku === productId) {
                     return {
                         ...cartProduct,
-                        quantidade: cartProduct.quantidade - 1,
+                        quantityItem: cartProduct.quantityItem - 1,
                     };
                 }
                 return cartProduct;
-            }).filter((cartProduct) => cartProduct.quantidade > 0));
+            }).filter((cartProduct) => cartProduct.quantityItem > 0));
     };
     
     const increaseProductQuantity = (productId: number) => {
@@ -86,11 +87,11 @@ const CartProvider = ({children}: {children: ReactNode}) => {
                 if (cartProduct.sku === productId) {
                     return {
                         ...cartProduct,
-                        quantidade: cartProduct.quantidade + 1,
+                        quantityItem: cartProduct.quantityItem + 1,
                     };
                 }
                 return cartProduct;
-            }).filter((cartProduct) => cartProduct.quantidade > 0));
+            }).filter((cartProduct) => cartProduct.quantityItem > 0));
     };
     
     const removeProductToCart = (productId: number) => {

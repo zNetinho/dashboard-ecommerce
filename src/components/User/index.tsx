@@ -6,16 +6,19 @@ import { ModeToggle } from "../SwitchTheme";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import Cart from "../Cart";
 
 
 export default function UserArea() {
     const { data: session, status } = useSession();
+    // token ja está chegando atráves da session
+    console.log(session);
     const user = {
         avatar: session?.user?.avatar || "",
         nome: session?.user?.name,
     };
     const userCustom = {
-        avatar: session?.user
+        avatar: session?.user,
     };
     
     const handleClickLogin = async () => {
@@ -52,6 +55,9 @@ export default function UserArea() {
                                  Fazer Logout
                     </Button>}
                 
+                </div>
+                <div>
+                    { status === "authenticated" && <Cart /> }
                 </div>
                 <div className='mt-5 absolute bottom-5 right-5'>
                     <ModeToggle />

@@ -3,18 +3,20 @@ import Link from "next/link";
 
 interface LinkComponentProps {
   href: string;
-  title: string;
-  anchor: React.ReactNode;
+  title?: string;
+  children: React.ReactNode;
+  className?: string
 }
 
-export default function LinkComponent({href, anchor}: LinkComponentProps) {
+export default function LinkComponent({href, children, className}: LinkComponentProps) {
     return (
         <Link 
             href={href}
-            title={`${anchor}`}
-            className='font-bold text-purple-600 hover:text-purple-800'
+            title={`${children}`}
+            className={`${className}`}
+            passHref
         >
-            {anchor}
+            {children}
         </Link>
     );
 }

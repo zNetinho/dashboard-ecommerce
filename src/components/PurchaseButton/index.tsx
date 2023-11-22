@@ -1,10 +1,6 @@
-import React, { useContext } from "react";
-import { Button } from "../ui/button";
-import LinkComponent from "../LinkComponent";
 import { ShoppingCartIcon } from "lucide-react";
-import { CartContext } from "@components/providers/Cart";
-
-
+import LinkComponent from "../LinkComponent";
+import { Button } from "../ui/button";
 
 export default function PurchaseButton() {
 

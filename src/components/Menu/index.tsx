@@ -11,9 +11,11 @@ export default function Menu( ) {
                     <NavigationMenuItem>
                         <LinkComponent
                             href='/'
-                            anchor='Inicio'
                             title='Clique para a Home'
-                        />  
+                        >
+                            Inicio
+
+                        </LinkComponent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
                         <NavigationMenuTrigger>
@@ -23,19 +25,22 @@ export default function Menu( ) {
                             <div className="w-[350px] py-8 gap-4 flex justify-center items-center">
                                 <LinkComponent
                                     href='/Exemplo-de-nome'
-                                    anchor='Categoria 01'
                                     title='Clique para a Categoria 01'
-                                />
+                                >
+                                    Categoria 01
+                                </LinkComponent>
                                 <LinkComponent
                                     href='/exemplo-de-nome'
-                                    anchor='Categoria 02'
                                     title='Clique para a Categoria 02'
-                                />
+                                >
+                                    Categoria 02
+                                </LinkComponent>
                                 <LinkComponent
                                     href='/nome-2'
-                                    anchor='Categoria 03'
                                     title='Clique para a Categoria 03'
-                                /> 
+                                > 
+                                    Categoria 03
+                                </LinkComponent>
                             </div>
 
                         </NavigationMenuContent>

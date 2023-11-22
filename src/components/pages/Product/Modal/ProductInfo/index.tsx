@@ -8,6 +8,7 @@ import { CartContext } from "@components/providers/Cart";
 import { Button } from "@components/components/ui/button";
 import ButtonAddToCart from "@components/components/Cart/ButtonAddToCart";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import HandleCart from "../HandleCart";
 // vai receber nome, preço, descrição
 
 const images = [
@@ -21,21 +22,6 @@ const images = [
 
 export default function ProductInfo({product}: any) {
 
-    const [quantityItem, setQuantityItem] = useState(1);
-
-    const handleDecreaseQuantityClick = () => {
-        setQuantityItem((prev) => (prev === 1 ? prev : prev - 1));
-    };
-    
-    const handleIncreaseQuantityClick = () => {
-        setQuantityItem((prev) =>  prev + 1);
-    };
-
-    const { addProductToCart } = useContext(CartContext);
-    const handleAddToCart = () => {
-        addProductToCart({ ...product, quantityItem });
-    };
-
     return (
         // Nome do produto, preço, descrição, imagem, e sku
         <div className="p-10 w-full">
@@ -44,7 +30,7 @@ export default function ProductInfo({product}: any) {
                     {/* Imagens */}
                     <div className="flex flex-row">
                         <Thumbnails 
-                            photos={images}
+                            photos={product.img}
                         />
                     </div>
                 </div>
@@ -60,24 +46,10 @@ export default function ProductInfo({product}: any) {
                     <DescriptionProduct
                         description={product.descricao}
                     />
-
-                    <div className="flex items-center gap-2 mt-4">
-                        <Button size="icon" variant="outline" onClick={handleDecreaseQuantityClick}>
-                            <ArrowLeftIcon size={16}/>
-                        </Button>
-                        <span>{quantityItem}</span>
-                        <Button size="icon" variant="outline" onClick={handleIncreaseQuantityClick}>
-                            <ArrowRightIcon size={16}/>
-                        </Button>
-                    </div>
-                    <div className="flex flex-col gap-2 mt-4">
-                        <div className="w-full mt-10">
-                            <PurchaseButton 
-                            />
-                        </div>
-                        <div>
-                            <ButtonAddToCart onClick={handleAddToCart}/>
-                        </div>
+                    <div>
+                        <HandleCart 
+                            product={product}
+                        />
                     </div>
                 </div>
             </div>
