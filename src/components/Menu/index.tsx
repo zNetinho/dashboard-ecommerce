@@ -1,7 +1,6 @@
 "use client";
 import LinkComponent from "../LinkComponent";
-import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
-import MenuItems from "./MenuItems";
+import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuList, NavigationMenuTrigger } from "../ui/navigation-menu";
 
 export default function Menu( ) {
     return (
@@ -14,7 +13,6 @@ export default function Menu( ) {
                             title='Clique para a Home'
                         >
                             Inicio
-
                         </LinkComponent>
                     </NavigationMenuItem>
                     <NavigationMenuItem>
@@ -24,19 +22,19 @@ export default function Menu( ) {
                         <NavigationMenuContent>
                             <div className="w-[350px] py-8 gap-4 flex justify-center items-center">
                                 <LinkComponent
-                                    href='/Exemplo-de-nome'
+                                    href='/categoria/nome-2'
                                     title='Clique para a Categoria 01'
                                 >
                                     Categoria 01
                                 </LinkComponent>
                                 <LinkComponent
-                                    href='/exemplo-de-nome'
+                                    href='/categoria/nome-3'
                                     title='Clique para a Categoria 02'
                                 >
                                     Categoria 02
                                 </LinkComponent>
                                 <LinkComponent
-                                    href='/nome-2'
+                                    href='/categoria/nome-4'
                                     title='Clique para a Categoria 03'
                                 > 
                                     Categoria 03

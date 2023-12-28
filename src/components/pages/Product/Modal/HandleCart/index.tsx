@@ -40,7 +40,7 @@ export default function HandleCart({ product }: any) {
             {/* Fim do increase */}
             {/* Começo do purchase button */}
             <div className="flex flex-col gap-2 mt-4">
-                <div className="w-full mt-10">
+                <div className="w-full mt-2">
                     <PurchaseButton 
                     />
                 </div>
