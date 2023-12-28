@@ -1,7 +1,7 @@
 import ImageComponent from "@components/components/ImageComponent";
 import LinkComponent from "@components/components/LinkComponent";
 import { Button } from "@components/components/ui/button";
-import React from "react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@components/components/ui/card";
 
 interface ItemModalProps {
     img: string,
@@ -12,30 +12,33 @@ interface ItemModalProps {
 
 // Item do Modal de produtos na categoria 
 export default function ItemModal({img, name, preco, slug}: ItemModalProps) {
+    
     return (
-        <div className="flex flex-col w-[200px] h-[300px] my-5 justify-center items-center border-2 border-gray-400 rounded-lg">
-            <div className="py-3">
-                <ImageComponent 
-                    src={img}
-                    alt="teste"
-                    height={120}
-                    width={150}
-                />
-            </div>
-            <div className="flex flex-col items-center mt-4">
-                <p>{name}</p>
-                <p>R$ {preco}</p>
-            </div>
-            <div className="mt-3">
-                <Button>
-                    <LinkComponent 
-                        href={`/produtos/${slug}`}
-                        anchor="Comprar"
-                        title={name}
-                        key={name}
+        
+        <Card className="flex flex-col w-[290px] h-[400px] justify-center items-center border-2 border-gray-400 rounded-lg">
+            <CardHeader>
+                <CardTitle>{name}</CardTitle> 
+            </CardHeader>
+            <CardContent>
+                <div className="py-2">
+                    <ImageComponent 
+                        src={img}
+                        alt="teste"
+                        height={200}
+                        width={230}
                     />
+                </div>
+            </CardContent>
+            <p className="font-semibold text-lg text-center mb-2">R$ {preco}</p>
+            <CardFooter className="flex justify-between">
+                <Button className="mt-8 uppercase font-bold">
+                    <LinkComponent
+                        href={`/produtos/${slug}`}
+                    >
+                        Ver produto
+                    </LinkComponent>
                 </Button>
-            </div>
-        </div>
+            </CardFooter>
+        </Card>
     );
 }

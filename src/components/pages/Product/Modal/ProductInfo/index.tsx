@@ -9,6 +9,7 @@ import { Button } from "@components/components/ui/button";
 import ButtonAddToCart from "@components/components/Cart/ButtonAddToCart";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 import HandleCart from "../HandleCart";
+import Rating from "@components/components/Ratings";
 // vai receber nome, preço, descrição
 
 const images = [
@@ -42,6 +43,11 @@ export default function ProductInfo({product}: any) {
                         <ProductPrice 
                             preco={product.preco}
                         />
+                    </div>
+                    <div>
+                        <Rating 
+                            rating={1}
+                        /> 
                     </div>
                     <DescriptionProduct
                         description={product.descricao}

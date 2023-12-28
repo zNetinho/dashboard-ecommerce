@@ -1,7 +1,6 @@
 import ProductInfo from "@components/components/pages/Product/Modal/ProductInfo";
 import { fetchProduct } from "@components/services/products/functions";
 import { Metadata, ResolvingMetadata } from "next";
-import { NextSeo } from "next-seo";
 
 type Props = {
     params: { slug_produto: string }

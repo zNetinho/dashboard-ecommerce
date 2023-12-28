@@ -1,12 +1,10 @@
 import PageDefault from "@components/components/Default";
 import { ThemeProvider } from "@components/components/theme-provider";
 import { AuthProvider } from "@components/providers/Auth";
+import CartProvider from "@components/providers/Cart";
 import type { Metadata } from "next";
 import React from "react";
 import "./globals.css";
-import CartProvider from "@components/providers/Cart";
-import Breadcrumb, { BreadcrumbProps } from "@components/components/Breadcrumb";
-import BreadcrumbElement from "@components/components/Breadcrumb/Breadcrumb";
 
 export const metadata: Metadata = {
     title: {
