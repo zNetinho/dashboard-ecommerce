@@ -15,7 +15,7 @@ export default function ImageComponent({src, alt, width, height}: ImageComponent
             alt={alt}
             width={width}
             height={height}
-            className="rounded-md flex object-contain max-w-[800px] max-h-[500px]"
+            className="rounded-md flex object-contain"
         />
     );
 }

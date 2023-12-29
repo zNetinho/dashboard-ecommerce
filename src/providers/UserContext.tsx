@@ -2,8 +2,8 @@
 
 import { parseCookies, setCookie } from "nookies";
 
-import { fetchInfoUser, loginAccount } from "@components/services/account/functions-auth";
-import { SetStateAction, createContext, useContext, useEffect, useState } from "react";
+import { loginAccount } from "@components/services/account/functions-auth";
+import { SetStateAction, createContext, useEffect, useState } from "react";
 
 type User = {
     nome: string,
@@ -34,6 +34,10 @@ export const UserProvider = ({ children }: any) => {
         const { "token_jwt": token } = parseCookies();
         console.log(token);
         console.log(user);
+        setCookie(undefined, "token_jwt", token, {
+            maxAge: 60 * 60 * 1, // 1 hora
+        });
+        window.sessionStorage.setItem("token_jwt", token);
     },[user]);
 
     async function signInAccount({email, password}: SignInData) {
@@ -42,6 +46,7 @@ export const UserProvider = ({ children }: any) => {
             email,
             password
         });
+        window.sessionStorage.setItem("token_jwt", token);
         setCookie(undefined, "token_jwt", token, {
             maxAge: 60 * 60 * 1, // 1 hora
         });

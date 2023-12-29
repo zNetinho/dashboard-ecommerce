@@ -1,8 +1,7 @@
 import ImageComponent from "@components/components/ImageComponent";
 import LinkComponent from "@components/components/LinkComponent";
 import { Button } from "@components/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@components/components/ui/card";
-
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@components/components/ui/card";
 interface ItemModalProps {
     img: string,
     name: string,
@@ -14,7 +13,6 @@ interface ItemModalProps {
 export default function ItemModal({img, name, preco, slug}: ItemModalProps) {
     
     return (
-        
         <Card className="flex flex-col w-[290px] h-[400px] justify-center items-center border-2 border-gray-400 rounded-lg">
             <CardHeader>
                 <CardTitle>{name}</CardTitle> 
