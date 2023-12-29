@@ -2,9 +2,8 @@
 import { Button } from "@components/components/ui/button";
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
-import { supabase } from "@components/lib/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 // Cria um schema para o objeto, representando a estrutura do objeto que vai receber
@@ -31,7 +30,6 @@ const createCategorieFormSchema = z.object({
         }),
 });
 
-
 // o z.infer, define qual a interface com base no Schema que passamos 'createCategorieFormSchema'
 type createCategorieFormData = z.infer<typeof createCategorieFormSchema>
 
@@ -54,21 +52,27 @@ export default function FormCategorias() {
     async function createCategoria(data: createCategorieFormData) {
         const token = "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..D30RVG1blozMwIKz.77vh0pOBz3mjkVkF5x8QLLZQ_2E-d7dC1O1X7KNPhwIK-PCSj0jimxRjJIfrN1BsNmZ3-IMYf4swcef67ybDcfSj3u5nqXTNRFIrKhbwX9eL-aCfwWdgrm_hWtC6shO98PwgSdXIBGMCA56GkbF65WsZL2tZEw0vjGM10LtgZlU_cPL7Y6B0t0kzS41TGr2Ismj8qYSaJy1gQadeHt5Ei27TAm-GeRmMAWDa5CS87MYjpQBEuPrKfd6Mp1UMJqF99XjtWkMjOnKqo46xex-PttIgb3YGNx7yag7jvFf5GZpwgHGkNXXLRnSsN_BaaMxGeKLMCAaeBZv0u9C1wcT_orkrQMaAPZACgTCnToc1N398j8M5zAoDbaKqG9larOII8kJJRBuFJEmldR8OzT8QlFrAk0PQuTI0-NrpjFpH2Tm_NTDh.Kzcvr-K9mrrtnFInC-uZ1A";
         try {
-            const response = await fetch("URL_DO_BANCO", {
+            const response = await fetch("http://localhost:3001/api/categorie", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
-                }
+                },
+                body: JSON.stringify({
+                    nome: data.nome,
+                    descricao: data.descricao,
+                    descricao_seo: data.descricao_seo,
+                    title_seo: data.title_seo
+                })
             });
+            if(response.ok) {
+                const data = await response.json();
+                console.log(data);
+            }
         } catch (error) {
             console.log(error);
         }
-
-        
-
     }
-    console.log(errors);
 
     return (
         <div>

@@ -2,6 +2,9 @@
 const nextConfig = {
     images: {
         domains: ["radio93fm.com.br"]
+    },
+    experimental: {
+        serverAction: true
     }
 };
 
