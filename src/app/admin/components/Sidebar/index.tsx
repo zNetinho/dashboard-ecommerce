@@ -20,13 +20,13 @@ export default function Sidebar() {
                         <NavigationMenuContent className="w-[180px] p-2" dir="=right">
                             <ul>
                                 <li className="p-4">
-                                    <NavigationMenuLink href="/categoria-criar">Criar categoria</NavigationMenuLink>
+                                    <NavigationMenuLink href="/categorias">Criar categoria</NavigationMenuLink>
                                 </li>
                                 <li className="p-4">
-                                    <NavigationMenuLink href="/categoria-editar">Editar categoria</NavigationMenuLink>
+                                    <NavigationMenuLink href="/categorias">Editar categoria</NavigationMenuLink>
                                 </li>
                                 <li className="p-4">
-                                    <NavigationMenuLink href="/categoria-excluir">Excluir categoria</NavigationMenuLink>
+                                    <NavigationMenuLink href="/categorias">Excluir categoria</NavigationMenuLink>
                                 </li>
                             </ul>
                         </NavigationMenuContent>

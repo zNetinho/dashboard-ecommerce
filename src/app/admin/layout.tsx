@@ -2,15 +2,16 @@
 
 import { useSession } from "next-auth/react";
 import React from "react";
+import LayoutAdmin from "./components/WrapperDefault";
 
 export default function DashboardLayout({ children }: { children: React.ReactNode; }) {
     const { data: session } = useSession();
 
     if( session ) {
         return (
-            <div>
+            <LayoutAdmin>
                 {children}
-            </div>
+            </LayoutAdmin>
         );
     } else {
         return (
