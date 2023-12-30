@@ -1,9 +1,9 @@
 "use client";
 
-import { parseCookies, setCookie } from "nookies";
+import { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { loginAccount } from "@components/services/account/functions-auth";
-import { SetStateAction, createContext, useEffect, useState } from "react";
+import { SetStateAction, createContext, useContext, useEffect, useState } from "react";
 
 type User = {
     nome: string,
@@ -19,25 +19,26 @@ type SignInData = {
 type AuthContextType = {
     user: User | null,
     signInAccount: (data: SignInData) => Promise<void>,
-    setUser: SetStateAction<any>,
+    // setUser: SetStateAction<any>,
     isAuthenticated: boolean
+    handleLogout: () => void
 };
 
 // tipar o contexto 'as'
 export const UserContext = createContext({} as AuthContextType);
 
 export const UserProvider = ({ children }: any) => {
-    const [user, setUser] = useState(null);
+    const { user } = useContext(UserContext)
+    // const [user, setUser] = useState(null);
     const isAuthenticated = !!user;
 
     useEffect(() => {
-        const { "token_jwt": token } = parseCookies();
-        console.log(token);
+
         console.log(user);
-        setCookie(undefined, "token_jwt", token, {
-            maxAge: 60 * 60 * 1, // 1 hora
-        });
-        window.sessionStorage.setItem("token_jwt", token);
+        // setCookie(undefined, "token_jwt", token, {
+        //     maxAge: 60 * 60 * 1, // 1 hora
+        // });
+        // window.sessionStorage.setItem("token_jwt", token);
     },[user]);
 
     async function signInAccount({email, password}: SignInData) {
@@ -50,10 +51,17 @@ export const UserProvider = ({ children }: any) => {
         setCookie(undefined, "token_jwt", token, {
             maxAge: 60 * 60 * 1, // 1 hora
         });
-        setUser(userLogged);
+        // setUser(userLogged);
     }
+
+    const handleLogout = () => {
+        destroyCookie(undefined, "token_jwt");
+        window.sessionStorage.removeItem("token_jwt");
+        // setUser(null);
+      };
+
     return (
-        <UserContext.Provider value={{ user, signInAccount, isAuthenticated, setUser }}>
+        <UserContext.Provider value={{ user, signInAccount, isAuthenticated,  handleLogout }}>
             {children}
         </UserContext.Provider>
     );

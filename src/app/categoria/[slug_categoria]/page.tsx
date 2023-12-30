@@ -15,7 +15,8 @@ export async function generateMetadata(
     parent: ResolvingMetadata
 ): Promise<Metadata> {
     const slug = params.slug_categoria;
-    const { categoria } = await fetchCategorie(slug);
+    const categoria = await fetchCategorie(slug);
+    console.log(categoria);
     if( categoria !== undefined ) {
         console.log(categoria);
         return {

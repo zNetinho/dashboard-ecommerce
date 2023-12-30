@@ -7,18 +7,20 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import Cart from "../Cart";
+import { useContext } from "react";
+import { UserContext } from "@components/providers/UserContext";
 
 
 export default function UserArea() {
     const { data: session, status } = useSession();
-    // token ja está chegando atráves da session
-    console.log(session);
+
     const user = {
         avatar: session?.user?.avatar || "",
         nome: session?.user?.name,
     };
     const userCustom = {
-        avatar: session?.user,
+        avatar: session?.user?.image || "",
+        nome: session?.user?.name
     };
     
     const handleClickLogin = async () => {
@@ -33,7 +35,7 @@ export default function UserArea() {
         <Sheet>
             <SheetTrigger className='bg-white w-[50px] h-[50px] rounded-full'>
                 <Avatar className='flex justify-center items-center m-auto'>
-                    <AvatarImage src={ user.avatar || userCustom.avatar } />
+                    <AvatarImage src={ user?.avatar || userCustom.avatar } />
                     <AvatarFallback>{<UserCircle size={42}/>}</AvatarFallback>
                 </Avatar>
             </SheetTrigger>
