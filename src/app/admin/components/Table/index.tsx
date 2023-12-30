@@ -1,68 +1,65 @@
 "use client"
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { useEffect, useState } from 'react'
-import { set, unknown } from 'zod'
-
-type UserList = {
-  nome: string
-}
+import { useEffect, useState } from 'react';
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
+import TableNavigation from './TableNavigation';
 
 const URL_API = "http://localhost:3001/api/categorie"
 
-export const getServerSideProps = (async () => {
-  "use serve"
-  const res = await fetch(`${URL_API}`);
-  const data: any = await res.json()
-  console.log(data)
-  return { props: { data } }
-}) satisfies GetServerSideProps<{ data: UserList }>
+export default function TableList() {
 
-export default function TableList({data}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
-  const [ headers, setHeaders ] = useState([])
+  const [ pagina , setPagina ] = useState(1);
+  const [ quantity, setQuantity ] = useState(0)
   const [ categorias, setCategorias ] = useState([])
 
+
   async function chamaCategorias() {
-    const res = await fetch(`${URL_API}`);
-      const data: any = await res.json()
-      console.log(data)
-      setCategorias(data)
-      const cabecalho = Array.from(new Set(data.flatMap(obj => Object.keys(obj))));
-      return cabecalho;
+    try {
+        const res = await fetch(`${URL_API}${pagina > 0 ? `?pagina=${pagina}` : ''}`);
+        const { resultadoPaginado, quantity }: any = await res.json()
+        console.log(resultadoPaginado, quantity)
+        setCategorias(resultadoPaginado);
+        setQuantity(quantity)
+    } catch (error) {
+        console.log("Erro na chamada das categorias")
+    }
   }
+  
 
   useEffect(() => {
-    const request = async () => {
-      const data: any = await chamaCategorias();
-      setHeaders(data);
-    }
-    request()
+    chamaCategorias()
+  }, [pagina])
+
+  useEffect(() => {
   }, [])
 
-  console.log(headers)
   return (
     <div>
       <table border={1}>
         <thead>
-            <tr>
-                { headers.map((item, index) => (
-                  <th key={index}>{ item }</th>
-                )) }
-            </tr>
+          <TableHeader />
         </thead>
         <tbody>
             { categorias.map((item, index) => (
-              <tr key={index}>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.id}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.nome}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.descricao}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.title_seo}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.descricao_seo}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.slug}</td>
-                  <td className='w-auto h-10 px-2 border-b-2 border-r-2'>{item.produtos.length}</td>
-              </tr>
+              <TableRow 
+                key={index}
+                item={item}
+                index={index}
+              />
             ))}
         </tbody>
+        <tfoot>
+          <tr className='h-20'>
+            <td>
+              <span>Total de registros {quantity}</span>
+            </td>
+          </tr>
+            <TableNavigation 
+              quantity={quantity}
+              setPagina={setPagina}
+            />
+        </tfoot>
     </table>
     </div>
   )
