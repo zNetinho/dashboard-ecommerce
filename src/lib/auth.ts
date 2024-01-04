@@ -33,13 +33,12 @@ export const authOptions: NextAuthOptions = {
                     body: JSON.stringify(data),
                     headers: { "Content-Type": "application/json" }
                 });
-                const user: IUser = await res.json();
-                console.log(user)
+                const {token, userLogged }: IUser = await res.json();
                 const userCustom = {
-                    email: user.userLogged.email || "",
-                    name: user.userLogged.nome || "",
-                    image: user.userLogged.avatar || "",
-                    token: user.token
+                    email: userLogged.email || "",
+                    name: userLogged.nome || "",
+                    image: userLogged.avatar || "",
+                    token: token
                 };
                 return userCustom;
             }
@@ -53,40 +52,18 @@ export const authOptions: NextAuthOptions = {
                     email?: string;
                     name?: string;
                     avatar?: string;
+                    token?: string
                 };
-    
-                console.log("Lib Auth.ts", token, user);
-    
+                
                 // Adicione as propriedades desejadas ao token
-                token.token = user.token;
+                token.token = userCustom.token;
                 token.email = userCustom.email;
                 token.name = userCustom.name;
                 token.avatar = userCustom.avatar;
-    
-                return token;
             }
+            console.log("Lib Auth.ts", token);
             return token;
         },
-        // jwt: ({ token, user }) => {
-        //     console.log(user)
-        //     if (user) {
-        //         const userCustom = user as {
-        //             token?: string;
-        //             email?: string;
-        //             name?: string;
-        //             avatar?: string;
-        //         };
-        //         console.log("Lib Auth.ts", token, user);
-    
-        //         // Adicione as propriedades desejadas ao token
-        //         token.token = userCustom.token;
-        //         token.email = userCustom.email;
-        //         token.name = userCustom.name;
-        //         token.avatar = userCustom.avatar;
-    
-        //     }
-        //     return token;
-        // },
         session: async ({ session, token }) => {
             return {
                 ...session,
@@ -99,10 +76,10 @@ export const authOptions: NextAuthOptions = {
             };
         },
         async redirect({ url, baseUrl }) {
-            if (url.startsWith("/")) return `${baseUrl}${url}`
-            else if (new URL(url).origin === baseUrl) return url
-            return baseUrl
-          },
+            if (url.startsWith("/")) return `${baseUrl}${url}`;
+            else if (new URL(url).origin === baseUrl) return url;
+            return baseUrl;
+        },
     },
     pages: {
         signIn: "/auth/signin",

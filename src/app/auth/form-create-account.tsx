@@ -11,11 +11,12 @@ import {
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
 import { createAccount, createAccountGoogle } from "@components/services/account/functions-auth";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 
 async function handleClickCreateAccount(nome: string, email:string, password: string, confirm_password: string) {
     try {
-        const user = createAccount(nome, email, password, confirm_password);
+        const user = await createAccount(nome, email, password, confirm_password);
+        console.log(user);
     } catch (error) {
         console.log(error);
     }
@@ -64,7 +65,7 @@ export function FormCreateAccount() {
                 </CardFooter>
             </Card>
             <div>
-                <Button onClick={() => handleClickCreateWithGoogle( email, password)}>
+                <Button onClick={() => handleClickCreateWithGoogle(email, password)}>
                     Create With Google
                 </Button>
             </div>
