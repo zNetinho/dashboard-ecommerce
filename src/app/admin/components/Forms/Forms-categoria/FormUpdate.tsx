@@ -1,12 +1,15 @@
+"use client";
+import { Button } from "@components/components/ui/button";
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
 import { z } from "zod";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/components/ui/button";
+import { useSession } from "next-auth/react";
+import { fetchCategorie } from "@components/services/category/functions";
 
-const createCategorieFormSchema = z.object({
+const updateCategorieFormSchema = z.object({
     // Tipa o dado, e permite criar algumas validações.
     // avatar: z .custom<FileList>((v) => v instanceof FileList)
     // .transform(list => list.item(0)!) o zod so tem tipos primitivos, e para poder enviar arquivos usamos essa tipagem '!' define que e um campo que sempre vai existir
@@ -32,17 +35,35 @@ const createCategorieFormSchema = z.object({
 });
 
 // o z.infer, define qual a interface com base no Schema que passamos 'createCategorieFormSchema'
-export type createCategorieFormData = z.infer<typeof createCategorieFormSchema>
+export type updateCategorieFormData = z.infer<typeof updateCategorieFormSchema>
 
-export default function FormsCreateCategoria({token}: any) {
-    console.log(token);
-    async function createCategoria(data: createCategorieFormData) {
+export default function FormUpdateCategoria({categoria} : any ) {
+    console.log(categoria);  
+    const { data: session, status } = useSession();
+    // const token = session?.user?.token?.token;
+    const user = session;
+
+    // devolve 2 info importante, 1° register, para registrar os campos do formularios.
+    // 2° handleSubmit, e um *High-order function*, ele vai devolver uma função para ser executada
+    // 3° formState, traz todos os erros da validação do formulário.
+    // 4° control, funciona como controle para fieldArrays
+    const { 
+        register,
+        handleSubmit,
+        formState: {errors},
+        control
+    } = useForm<updateCategorieFormData>({
+        // o zodResolver liga o formulario a validação criada no schema
+        resolver: zodResolver(updateCategorieFormSchema)
+    });
+
+    async function saveChange(data: updateCategorieFormData) {
         try {
             const response = await fetch("http://localhost:3001/api/categorie", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${session?.user.token}`
                 },
                 body: JSON.stringify({
                     nome: data.nome,
@@ -60,31 +81,18 @@ export default function FormsCreateCategoria({token}: any) {
         }
     }
 
-    // devolve 2 info importante, 1° register, para registrar os campos do formularios.
-    // 2° handleSubmit, e um *High-order function*, ele vai devolver uma função para ser executada
-    // 3° formState, traz todos os erros da validação do formulário.
-    // 4° control, funciona como controle para fieldArrays
-    const { 
-        register,
-        handleSubmit,
-        formState: {errors},
-        control
-    } = useForm<createCategorieFormData>({
-        // o zodResolver liga o formulario a validação criada no schema
-        resolver: zodResolver(createCategorieFormSchema)
-    });
-
     return (
         <div>
             {/* A função 'createCategoria' e passada como parametro para o HOF */}
-            <form onSubmit={handleSubmit(createCategoria)}>
+            <form onSubmit={handleSubmit(saveChange)}>
                 <div>
                     <Label htmlFor="nome_da_categoria">
-                        Nome
+                  Nome
                     </Label>
                     <Input 
                         type="text"
                         id="nome_da_categoria"
+                        placeholder={categoria.nome}
                         // chamando a função register e passando o nome do campo
                         { ...register("nome")}
                     />
@@ -92,44 +100,48 @@ export default function FormsCreateCategoria({token}: any) {
                 </div>
                 <div>
                     <Label htmlFor="descricao">
-                        descricao
+                  descricao
                     </Label>
                     <Input 
                         type="text"
                         id="descricao"
+                        placeholder={categoria?.descricao}
                         { ...register("descricao")}
                     />
                     { errors.descricao && <span className="text-red-400"> { errors.descricao.message } </span> }
                 </div>
                 <div>
                     <Label htmlFor="descricao_seo">
-                        Meta description
+                  Meta description
                     </Label>
                     <Input 
                         type="text"
                         id="descricao_seo"
+                        placeholder={categoria?.descricao_seo}
                         { ...register("descricao_seo")}
                     />
                     { errors.descricao_seo && <span className="text-red-400"> { errors.descricao_seo.message } </span> }
                 </div>
                 <div>
                     <Label htmlFor="title_seo">
-                        Titulo (title)
+                  Titulo (title)
                     </Label>
                     <Input 
                         type="text"
                         id="title_seo"
+                        placeholder={categoria?.title_seo}
                         { ...register("title_seo")}
                     />
                     { errors.title_seo && <span className="text-red-400"> { errors.title_seo.message } </span> }
                 </div>
                 <div>
                     <Label htmlFor="texto_acima">
-                        Texto acima
+                  Texto acima
                     </Label>
                     <Input 
                         type="text"
                         id="texto_acima"
+                        placeholder={categoria?.texto_acima}
                         // chamando a função register e passando o nome do campo
                         { ...register("texto_acima")}
                     />
@@ -137,11 +149,12 @@ export default function FormsCreateCategoria({token}: any) {
                 </div>
                 <div>
                     <Label htmlFor="texto_abaixo">
-                        Texto abaixo
+                  Texto abaixo
                     </Label>
                     <Input 
                         type="text"
                         id="texto_abaixo"
+                        placeholder={categoria?.texto_abaixo}
                         // chamando a função register e passando o nome do campo
                         { ...register("texto_abaixo")}
                     />
@@ -152,12 +165,12 @@ export default function FormsCreateCategoria({token}: any) {
                         variant="outline"
                         type="submit"
                     >
-                        Criar
+                  Criar
                     </Button>
                     <Button
                         variant="destructive"
                     >
-                        Cancelar
+                  Cancelar
                     </Button>
                 </div>
             </form>

@@ -20,7 +20,7 @@ export default function Sidebar() {
                         <NavigationMenuContent className="w-[180px] p-2" dir="=right">
                             <ul>
                                 <li className="p-4">
-                                    <NavigationMenuLink href="/categorias">Criar categoria</NavigationMenuLink>
+                                    <NavigationMenuLink href="/admin/categorias">Lista categoria</NavigationMenuLink>
                                 </li>
                                 <li className="p-4">
                                     <NavigationMenuLink href="/categorias">Editar categoria</NavigationMenuLink>
