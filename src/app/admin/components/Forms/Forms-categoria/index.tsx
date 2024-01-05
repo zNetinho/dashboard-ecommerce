@@ -1,42 +1,17 @@
+import { Button } from "@components/components/ui/button";
 import { Input } from "@components/components/ui/input";
 import { Label } from "@components/components/ui/label";
-import { z } from "zod";
-import React from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@components/components/ui/button";
-
-const createCategorieFormSchema = z.object({
-    // Tipa o dado, e permite criar algumas validações.
-    // avatar: z .custom<FileList>((v) => v instanceof FileList)
-    // .transform(list => list.item(0)!) o zod so tem tipos primitivos, e para poder enviar arquivos usamos essa tipagem '!' define que e um campo que sempre vai existir
-    // .refine(file => file?.size <= 5 * 1024 * 1024, "O arquivo precisa ter no máximo 5MB"), 
-    nome: z.string()
-        .nonempty("O nome da categoria e obrigatorio")
-        .toLowerCase(),
-    descricao: z.string()
-        .min(10, "A descrição deve conter no mínimo 10 caracteres"),
-    descricao_seo: z.string()
-        .min(1, "Por favor insira algo")
-        .max(148, "A descrição de SEO deve conter até 148 caracteres."),
-    title_seo: z.string()
-        .min(1, "Por favor informe o Titulo SEO da categoria.")
-    // Permite criar regras de transformação para os campos
-        .transform(words => {
-            return words.trim().split(" ").map(word => {
-                return word[0].toLocaleUpperCase().concat(word.substring(1));
-            }).join(" ");
-        }),
-    texto_acima: z.string(),
-    texto_abaixo: z.string(),
-});
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { CategorieSchemaForms } from "../forms";
 
 // o z.infer, define qual a interface com base no Schema que passamos 'createCategorieFormSchema'
-export type createCategorieFormData = z.infer<typeof createCategorieFormSchema>
+export type updateCategorieFormData = z.infer<typeof CategorieSchemaForms>
 
 export default function FormsCreateCategoria({token}: any) {
     console.log(token);
-    async function createCategoria(data: createCategorieFormData) {
+    async function createCategoria(data: updateCategorieFormData) {
         try {
             const response = await fetch("http://localhost:3001/api/categorie", {
                 method: "POST",
@@ -54,6 +29,7 @@ export default function FormsCreateCategoria({token}: any) {
             if(response.ok) {
                 const data = await response.json();
                 console.log(data);
+
             }
         } catch (error) {
             console.log(error);
@@ -69,9 +45,9 @@ export default function FormsCreateCategoria({token}: any) {
         handleSubmit,
         formState: {errors},
         control
-    } = useForm<createCategorieFormData>({
+    } = useForm<updateCategorieFormData>({
         // o zodResolver liga o formulario a validação criada no schema
-        resolver: zodResolver(createCategorieFormSchema)
+        resolver: zodResolver(CategorieSchemaForms)
     });
 
     return (

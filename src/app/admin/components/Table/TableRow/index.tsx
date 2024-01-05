@@ -2,6 +2,7 @@ import LinkComponent from "@components/components/LinkComponent";
 import { DeleteIcon, EditIcon } from "lucide-react";
 
 import React from "react";
+// import { deleteCategoria } from "../../Forms/forms";
 
 interface TableRowProps {
   item: {
@@ -12,12 +13,35 @@ interface TableRowProps {
     produtos: string[];
   };
   index: number;
+  token: string;
 }
 
 export default function TableRow({
     item,
     index,
+    token
 }: TableRowProps) {
+    console.log(token);
+    const id = item.id;
+
+    async function deleteCategoria(id: number) {
+        try {
+            const response = await fetch(`http://localhost:3001/api/categorie/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            if(response.ok) {
+                const data = await response.json();
+                console.log(data);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <tr key={index}>
             <td className="w-auto h-10 px-2 border-2">
@@ -32,13 +56,13 @@ export default function TableRow({
             <td className="w-auto h-10 px-2 border-2">
                 {item.produtos.length}
             </td>
-            <td>
+            <td className="w-auto h-10 px-2 border-2">
                 <LinkComponent href={`/admin/categorias/edit/${item.slug}`}>
-                    <EditIcon />
+                    <EditIcon fill="yellow" color="black"/>
                 </LinkComponent>
             </td>
-            <td>
-                <DeleteIcon />
+            <td className="w-auto h-10 px-2 border-2">
+                <DeleteIcon fill="red" color="white" onClick={() => deleteCategoria(id)}/>
             </td>
         </tr>
     );

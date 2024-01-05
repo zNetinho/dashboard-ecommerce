@@ -7,9 +7,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSession } from "next-auth/react";
-import { fetchCategorie } from "@components/services/category/functions";
+import LinkComponent from "@components/components/LinkComponent";
+// import { CategorieSchemaForms } from "../forms";
 
-const updateCategorieFormSchema = z.object({
+export const CategorieSchemaForms = z.object({
     // Tipa o dado, e permite criar algumas validações.
     // avatar: z .custom<FileList>((v) => v instanceof FileList)
     // .transform(list => list.item(0)!) o zod so tem tipos primitivos, e para poder enviar arquivos usamos essa tipagem '!' define que e um campo que sempre vai existir
@@ -35,7 +36,7 @@ const updateCategorieFormSchema = z.object({
 });
 
 // o z.infer, define qual a interface com base no Schema que passamos 'createCategorieFormSchema'
-export type updateCategorieFormData = z.infer<typeof updateCategorieFormSchema>
+export type updateCategorieFormData = z.infer<typeof CategorieSchemaForms>
 
 export default function FormUpdateCategoria({categoria} : any ) {
     console.log(categoria);  
@@ -54,12 +55,12 @@ export default function FormUpdateCategoria({categoria} : any ) {
         control
     } = useForm<updateCategorieFormData>({
         // o zodResolver liga o formulario a validação criada no schema
-        resolver: zodResolver(updateCategorieFormSchema)
+        resolver: zodResolver(CategorieSchemaForms)
     });
 
     async function saveChange(data: updateCategorieFormData) {
         try {
-            const response = await fetch("http://localhost:3001/api/categorie", {
+            const response = await fetch(`http://localhost:3001/api/categorie/${categoria.slug}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -162,15 +163,20 @@ export default function FormUpdateCategoria({categoria} : any ) {
                 </div>
                 <div className="flex gap-4 mt-5">
                     <Button
-                        variant="outline"
+                        variant="secondary"
                         type="submit"
                     >
-                  Criar
+                  Atualizar
                     </Button>
                     <Button
                         variant="destructive"
                     >
-                  Cancelar
+                        <LinkComponent
+                            href="/admin/categorias/"
+                            title="Voltar para a pagina anterior"
+                        >
+                            Cancelar
+                        </LinkComponent>
                     </Button>
                 </div>
             </form>

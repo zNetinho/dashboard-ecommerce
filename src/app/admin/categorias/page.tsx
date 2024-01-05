@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Tabs,
     TabsContent,
@@ -6,8 +8,13 @@ import {
 } from "@components/components/ui/tabs";
 import FormCategorias from "../components/Forms";
 import TableList from "../components/Table";
+import { useSession } from "next-auth/react";
 
-export default async function CategoriaAdmin() {
+export default function CategoriaAdmin() {
+
+    const { data: session, status } = useSession();
+    const token = session?.user?.token?.token;
+
     return (
         <main>
             <section className="flex flex-col">
@@ -16,7 +23,7 @@ export default async function CategoriaAdmin() {
                     <Tabs defaultValue="lista_categorias">
                         <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="lista_categorias">
-                                Lista de categorias
+                Lista de categorias
                             </TabsTrigger>
                             <TabsTrigger value="criar_categoria">Criar categoria</TabsTrigger>
                         </TabsList>
@@ -24,16 +31,18 @@ export default async function CategoriaAdmin() {
                         <TabsContent value="lista_categorias">
                             <div>
                                 <h2 className="text-3xl font-medium text-center my-4">
-                                    Listar categorias
+                  Listar categorias
                                 </h2>
                                 {/* <FormCategorias /> */}
-                                <TableList />
+                                <TableList 
+                                    token={token}
+                                />
                             </div>
                         </TabsContent>
                         <TabsContent value="criar_categoria">
                             <div>
                                 <h2 className="text-3xl font-medium text-center my-4">
-                                    Criar categoria
+                  Criar categoria
                                 </h2>
                                 <FormCategorias />
                             </div>
