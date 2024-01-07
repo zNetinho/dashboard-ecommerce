@@ -7,7 +7,7 @@ import TableNavigation from "./TableNavigation";
 
 const URL_API = "http://localhost:3001/api/categorie";
 
-export default function TableList(token) {
+export default function TableList(token: string) {
     console.log(token);
 
     const [ pagina , setPagina ] = useState(1);

@@ -61,7 +61,6 @@ export const authOptions: NextAuthOptions = {
                 token.name = userCustom.name;
                 token.avatar = userCustom.avatar;
             }
-            console.log("Lib Auth.ts", token);
             return token;
         },
         session: async ({ session, token }) => {
