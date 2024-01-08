@@ -1,17 +1,17 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import TableRow from "../components/Table/TableRow";
-import TableHeader from "../components/Table/TableHeader";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/components/ui/tabs";
+import { useEffect, useState } from "react";
+import TableListProduct from "./components/Table/TableListProduct";
+import FormsCreateProduto from "./components/Forms/FormsCreate";
 import { useSession } from "next-auth/react";
-import TableNavigation from "../components/Table/TableNavigation";
-import TableRowProduct from "./components/Table/TableRowProduct";
 
 
 const URL_API = "http://localhost:3001/api/products";
 
 export default function ProductPage() {
-    const token = "123144123";
-    const [produtos, setProdutos ] = useState<any>([]);
+    const { data: session } = useSession();
+    const token = session?.user?.token?.token;
+    const [produtos, setProdutos ] = useState<any>([]);"";
     
     async function chamaProdutos() {
         try {
@@ -32,30 +32,41 @@ export default function ProductPage() {
 
     return (
         <div>
-            <table border={1}>
-                <thead>
-                    <TableHeader />
-                </thead>
-                <tbody>
-                    { produtos.map((produtos, index) => (
-                        <TableRowProduct 
-                            key={index}
-                            produtos={produtos}
-                            index={index}
-                            token={token}
-                            // findCategoriaToUpdate={findCategoriaToUpdate}
-                        />
-                    ))}
-                </tbody>
-                <tfoot>
-                    <tr className='h-20'>
-                        <td>
-                            {/* <span>Total de registros {}</span> */}
-                        </td>
-                    </tr>
-                    <TableNavigation />
-                </tfoot>
-            </table>
+            <main>
+                <section className="flex flex-col">
+                    {/* Guias de abas para opções */}
+                    <div className="my-4 w-full">
+                        <Tabs defaultValue="lista_categorias">
+                            <TabsList className="grid w-full grid-cols-2">
+                                <TabsTrigger value="lista_categorias">
+                Lista de Produtos
+                                </TabsTrigger>
+                                <TabsTrigger value="criar_categoria">Criar produto</TabsTrigger>
+                            </TabsList>
+                            {/* Ao clicar em uma aba renderizar o conteudo dela */}
+                            <TabsContent value="lista_categorias">
+                                <div>
+                                    <h2 className="text-3xl font-medium text-center my-4">
+                  Listar de produtos
+                                    </h2>
+                                    <TableListProduct
+                                        produtos={produtos}
+                                        token={token}
+                                    />
+                                </div>
+                            </TabsContent>
+                            <TabsContent value="criar_categoria">
+                                <div>
+                                    <h2 className="text-3xl font-medium text-center my-4">
+                  Criar produto
+                                    </h2>
+                                    <FormsCreateProduto />
+                                </div>
+                            </TabsContent>
+                        </Tabs>
+                    </div>
+                </section>
+            </main>
         </div>
     );
 }

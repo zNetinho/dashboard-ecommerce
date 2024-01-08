@@ -18,7 +18,6 @@ export default function TableRowProduct({
     index
 }: TableRowProducts) {
     const sku = produtos.sku;
-    console.log(produtos);
  
     async function deleteProduto(sku: number) {
         try {

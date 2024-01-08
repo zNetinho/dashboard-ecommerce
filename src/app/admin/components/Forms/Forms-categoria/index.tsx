@@ -10,7 +10,7 @@ import { CategorieSchemaForms } from "../forms";
 export type updateCategorieFormData = z.infer<typeof CategorieSchemaForms>
 
 export default function FormsCreateCategoria({token}: any) {
-    console.log(token);
+
     async function createCategoria(data: updateCategorieFormData) {
         try {
             const response = await fetch("http://localhost:3001/api/categorie", {
@@ -28,6 +28,10 @@ export default function FormsCreateCategoria({token}: any) {
             });
             if(response.ok) {
                 const data = await response.json();
+                if(data.categorie) {
+                    alert("Categoria cadastrada com sucesso");
+                    window.location.href = "/admin/categorias";
+                }
                 console.log(data);
 
             }
