@@ -2,7 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/components/ui/tabs";
 import { useEffect, useState } from "react";
 import TableListProduct from "./components/Table/TableListProduct";
-import FormsCreateProduto from "./components/Forms/FormsCreate";
+import FormsCreateProduto from "./components/Forms";
 import { useSession } from "next-auth/react";
 
 
@@ -60,7 +60,9 @@ export default function ProductPage() {
                                     <h2 className="text-3xl font-medium text-center my-4">
                   Criar produto
                                     </h2>
-                                    <FormsCreateProduto />
+                                    <FormsCreateProduto
+                                        token={token}
+                                    />
                                 </div>
                             </TabsContent>
                         </Tabs>

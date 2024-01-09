@@ -2,7 +2,7 @@
 import { LogInIcon, LogOutIcon, UserCircle } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { ModeToggle } from "../SwitchTheme";
+import { ModeToggle } from "../Menu/SwitchTheme";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";

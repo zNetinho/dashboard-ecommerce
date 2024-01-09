@@ -1,5 +1,5 @@
 import React from "react";
-import banner01 from "../../../public/banner-01.png";
+import banner01 from "/public/banner-01.png";
 import Image from "next/image";
 
 export default function HeroSection() {

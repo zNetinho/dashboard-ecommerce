@@ -18,7 +18,7 @@ export default function TableRowProduct({
     index
 }: TableRowProducts) {
     const sku = produtos.sku;
- 
+
     async function deleteProduto(sku: number) {
         try {
             const response = await fetch(`http://localhost:3001/api/produtos/${sku}`, {
