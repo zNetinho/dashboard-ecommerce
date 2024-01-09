@@ -7,11 +7,11 @@ export const ProductSchemaForms = z.object({
     // avatar: z .custom<FileList>((v) => v instanceof FileList)
     // .transform(list => list.item(0)!) o zod so tem tipos primitivos, e para poder enviar arquivos usamos essa tipagem '!' define que e um campo que sempre vai existir
     // .refine(file => file?.size <= 5 * 1024 * 1024, "O arquivo precisa ter no máximo 5MB"), 
-    nome: z.string()
+    nome_produto: z.string()
         .nonempty("O nome da categoria e obrigatorio")
         .toLowerCase(),
-    preco: z.coerce.number().gte(1),
-    img: z.string().array(),
+    preco_produto: z.coerce.number().gte(1),
+    // img: z.string().array(),
     descricao: z.string(),
     descricao_seo: z.string()
         .min(1, "Por favor insira algo")
