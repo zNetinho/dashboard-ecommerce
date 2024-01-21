@@ -1,5 +1,5 @@
 import ButtonAddToCart from "@components/components/Cart/ButtonAddToCart";
-import PurchaseButton from "@components/components/PurchaseButton";
+import PurchaseButton from "@components/components/pages/Product/PurchaseButton";
 import { Button } from "@components/components/ui/button";
 import { CartContext } from "@components/providers/Cart";
 import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";

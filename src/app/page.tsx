@@ -1,6 +1,6 @@
 "use client";
 import Benefits from "@components/components/Benefits";
-import HeroSection from "@components/components/HeroBanner";
+import HeroSection from "@components/components/pages/Home/HeroBanner";
 import { useSession } from "next-auth/react";
 
 export default function Home() {

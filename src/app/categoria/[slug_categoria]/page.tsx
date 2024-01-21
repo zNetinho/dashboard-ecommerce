@@ -15,12 +15,10 @@ export async function generateMetadata(
     parent: ResolvingMetadata
 ): Promise<Metadata> {
     const slug = params.slug_categoria;
-    const categoria = await fetchCategorie(slug);
-    console.log(categoria);
+    const { categoria } = await fetchCategorie(slug);
     if( categoria !== undefined ) {
-        console.log(categoria);
         return {
-            title: categoria.title_seo || "",
+            title: categoria?.title_seo || "",
             description: categoria.descricao_seo,
             category: categoria.nome,
             robots: {
@@ -43,13 +41,11 @@ export async function generateMetadata(
     } else {
         redirect("/404");
     }
-
-    
 }
     
 export default async function Categoria({ params }: any) {
     const { slug_categoria } = params;
-    const categoria = await fetchCategorie(slug_categoria);
+    const { categoria } = await fetchCategorie(slug_categoria);
     console.log(categoria);
     // substituir para a rota que carrega somente os produtos da categoria /categorias/products
     const productsList = await listProducts();
@@ -57,7 +53,6 @@ export default async function Categoria({ params }: any) {
     if( productsList ) {
         for (let index = 0; index < productsList.length; index++) {
             const product = productsList[index];
-            console.log(product);
             if(product.categoria === categoria.nome) {
                 products.push(product);
             }

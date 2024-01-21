@@ -23,18 +23,19 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body>
                 <AuthProvider>
-                    <CartProvider>
-                        <ThemeProvider
-                            attribute="class"
-                            defaultTheme="system"
-                            enableSystem
-                            disableTransitionOnChange
-                        >
-                            <PageDefault>
-                                {children}
-                            </PageDefault>
-                        </ThemeProvider>
-                    </CartProvider>
+
+                        <CartProvider>
+                            <ThemeProvider
+                                attribute="class"
+                                defaultTheme="system"
+                                enableSystem
+                                disableTransitionOnChange
+                            >
+                                <PageDefault>
+                                    {children}
+                                </PageDefault>
+                            </ThemeProvider>
+                        </CartProvider>
                 </AuthProvider>
             </body>
         </html>

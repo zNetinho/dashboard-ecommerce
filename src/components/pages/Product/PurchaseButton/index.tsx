@@ -1,6 +1,6 @@
 import { ShoppingCartIcon } from "lucide-react";
-import LinkComponent from "../LinkComponent";
-import { Button } from "../ui/button";
+import LinkComponent from "../../../LinkComponent";
+import { Button } from "../../../ui/button";
 
 export default function PurchaseButton() {
 

@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import Star from "./star";
+import Star from "./Star";
 
 interface RatingProps {
     rating?: number;
