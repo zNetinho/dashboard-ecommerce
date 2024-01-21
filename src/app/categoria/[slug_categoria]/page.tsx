@@ -15,7 +15,8 @@ export async function generateMetadata(
     parent: ResolvingMetadata
 ): Promise<Metadata> {
     const slug = params.slug_categoria;
-    const { categoria } = await fetchCategorie(slug);
+    const categoria = await fetchCategorie(slug);
+    console.log(categoria);
     if( categoria !== undefined ) {
         console.log(categoria);
         return {
@@ -48,7 +49,7 @@ export async function generateMetadata(
     
 export default async function Categoria({ params }: any) {
     const { slug_categoria } = params;
-    const { categoria } = await fetchCategorie(slug_categoria);
+    const categoria = await fetchCategorie(slug_categoria);
     console.log(categoria);
     // substituir para a rota que carrega somente os produtos da categoria /categorias/products
     const productsList = await listProducts();

@@ -1,5 +1,5 @@
 "use client";
-import { LogInIcon, LogOutIcon, UserCircle } from "lucide-react";
+import { LogInIcon, LogOutIcon, ShoppingCartIcon, UserCircle } from "lucide-react";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import { ModeToggle } from "../SwitchTheme";
